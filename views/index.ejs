@@ -1,1 +1,21 @@
 <a href="/login">Autentificare</a>
+<button class="filip-button" onclick="window.location.href='/create-db'">
+  Creare BD
+</button>
+<button class="filip-button" onclick="window.location.href='/insert-db'">
+  Incarcare BD
+</button>
+<table border="1">
+  <tr>
+    <th>ID</th>
+    <th>Nume</th>
+    <th>Pret</th>
+  </tr>
+  <% produse.forEach(p => { %>
+    <tr>
+      <td><%= p.id %></td>
+      <td><%= p.name %></td>
+      <td><%= p.price %></td>
+    </tr>
+  <% }) %>
+</table>
