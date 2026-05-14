@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const Database = require("better-sqlite3");
 
 const app = express();
-
 const port = 6790;
 
 app.set('view engine', 'ejs');
@@ -19,9 +18,24 @@ function getProduse() {
   return cumparaturiDb.prepare("SELECT * FROM produse").all();
 }
 
+function insertProdus(name, price) {
+  cumparaturiDb.prepare(`
+    INSERT INTO produse(name, price) VALUES(?, ?);
+  `).run(name, price);
+}
+
+function createProduseTable() {
+  cumparaturiDb.prepare(`
+    CREATE TABLE IF NOT EXISTS produse (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      price REAL NOT NULL
+    );
+    `).run();
+}
+
 app.get('/', (req, res) => {
-  const produse = getProduse();
-  res.render('index',  { produse }  );
+  res.render('index',  { produse: getProduse() }  );
 });
 
 app.get('/autentificare', (req, res) => {
@@ -30,25 +44,18 @@ app.get('/autentificare', (req, res) => {
 
 app.get('/create-db', (req, res) => {
   console.log("Create db");
-  cumparaturiDb.prepare(`
-    CREATE TABLE IF NOT EXISTS produse (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL,
-      price REAL NOT NULL
-    );
-    `).run();
-  const produse = getProduse();
-  res.render('index',  {produse} );
+  
+  createProduseTable();
+  
+  res.render('index',  { produse: getProduse() } );
 });
 
 app.get('/insert-db', (req, res) => {
   console.log("Insert db");
-  cumparaturiDb.prepare(`
-    INSERT INTO produse(name, price) VALUES(?, ?);
-  `).run("Honda Civic", 67);
+
+  insertProdus("Honda Civic", 67);
   
-  const produse = getProduse();
-  res.render('index',  { produse } );
+  res.render('index',  { produse: getProduse() } );
 });
 
 app.listen(port, () => {
