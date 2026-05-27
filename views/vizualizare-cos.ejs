@@ -1,0 +1,25 @@
+<section class="panel">
+  <h2>Coșul tău</h2>
+  <% if (!produse || produse.length === 0) { %>
+    <p>Nu ai adăugat încă produse în coș.</p>
+  <% } else { %>
+    <% let total = 0; %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Produs</th>
+          <th>Preț</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% produse.forEach((p) => { total += p.price; %>
+          <tr>
+            <td><%= p.name %></td>
+            <td><%= p.price %> lei</td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+    <p class="total">Total: <strong><%= total.toFixed(2) %> lei</strong></p>
+  <% } %>
+</section>

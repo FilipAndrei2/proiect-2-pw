@@ -1,0 +1,16 @@
+[
+  {
+    "username": "admin",
+    "parola_hash": "$2b$10$ojgJtF/OL6bm8AA0aiNGFe.wutGv5nlH9EWyr0MssYKpRjrPGp8eC",
+    "role": "ADMIN",
+    "nume": "Ionescu",
+    "prenume": "Adrian"
+  },
+  {
+    "username": "user",
+    "parola_hash": "$2b$10$M83Paqk1MWyfygrzs3EEJuO6ch/J5PO4c38.kZNY2bCxQnEbeVyLq",
+    "role": "USER",
+    "nume": "Popescu",
+    "prenume": "Ioana"
+  }
+]

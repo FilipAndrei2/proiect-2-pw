@@ -1,0 +1,16 @@
+<section class="panel">
+  <h2>Administrare produse</h2>
+  <p>Adaugă un produs nou în baza de date.</p>
+  <form action="/admin/adaugare-produs" method="POST" class="form">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+    <label>
+      Nume produs
+      <input type="text" name="name" required />
+    </label>
+    <label>
+      Preț (lei)
+      <input type="number" name="price" step="0.01" min="0" required />
+    </label>
+    <button type="submit">Adaugă produs</button>
+  </form>
+</section>

@@ -1,0 +1,52 @@
+[
+  {
+    "intrebare": "Care este componenta principala responsabila de stocarea energiei intr-o masina electrica?",
+    "variante": [
+      "Alternatorul",
+      "Bateria de inalta tensiune",
+      "Filtrul de ulei",
+      "Rezervorul de combustibil"
+    ],
+    "corect": 1
+  },
+  {
+    "intrebare": "Ce avantaj are recuperarea energiei la franare (regenerative braking)?",
+    "variante": [
+      "Reduce zgomotul motorului",
+      "Incarca partial bateria in timpul franarii",
+      "Inlocuieste complet placutele de frana",
+      "Creste consumul de energie"
+    ],
+    "corect": 1
+  },
+  {
+    "intrebare": "Cum se numeste priza standard pentru incarcare AC la statii publice in Europa?",
+    "variante": [
+      "Type 2",
+      "USB-C",
+      "Type A",
+      "HDMI"
+    ],
+    "corect": 0
+  },
+  {
+    "intrebare": "Care este rolul unui invertor intr-un vehicul electric?",
+    "variante": [
+      "Transforma curentul continuu in curent alternativ pentru motor",
+      "Stocheaza energia mecanica",
+      "Lubrifiaza transmisia",
+      "Regleaza presiunea in anvelope"
+    ],
+    "corect": 0
+  },
+  {
+    "intrebare": "Ce inseamna autonomia unei masini electrice?",
+    "variante": [
+      "Numarul de viteze disponibile",
+      "Distanta maxima parcursa cu o incarcare",
+      "Timpul de incarcare la priza",
+      "Greutatea vehiculului"
+    ],
+    "corect": 1
+  }
+]

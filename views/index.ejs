@@ -1,21 +1,64 @@
-<a href="/login">Autentificare</a>
-<button class="filip-button" onclick="window.location.href='/create-db'">
-  Creare BD
-</button>
-<button class="filip-button" onclick="window.location.href='/insert-db'">
-  Incarcare BD
-</button>
-<table border="1">
-  <tr>
-    <th>ID</th>
-    <th>Nume</th>
-    <th>Pret</th>
-  </tr>
-  <% produse.forEach(p => { %>
-    <tr>
-      <td><%= p.id %></td>
-      <td><%= p.name %></td>
-      <td><%= p.price %></td>
-    </tr>
-  <% }) %>
-</table>
+<section class="panel">
+  <h2>
+    <% if (currentUser) { %>
+      Bine ai venit, <%= currentUser.nume %> <%= currentUser.prenume %>!
+    <% } else if (usernameCookie) { %>
+      Bine ai venit, <%= usernameCookie %>!
+    <% } else { %>
+      Bine ai venit!
+    <% } %>
+  </h2>
+  <p>
+    Descoperă accesorii și consumabile pentru mașini electrice, alese pentru
+    mobilitate sigură și eficientă.
+  </p>
+</section>
+
+<section class="panel actions">
+  <form action="/creare-bd" method="POST" class="inline-form">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+    <button type="submit">Creare BD</button>
+  </form>
+  <form action="/inserare-bd" method="POST" class="inline-form">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+    <button type="submit">Încărcare BD</button>
+  </form>
+</section>
+
+<section class="panel">
+  <h3>Produse disponibile</h3>
+  <% if (!produse || produse.length === 0) { %>
+    <p>Nu există produse încă. Creează și încarcă baza de date.</p>
+  <% } else { %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nume</th>
+          <th>Preț</th>
+          <th>Acțiune</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% produse.forEach((p) => { %>
+          <tr>
+            <td><%= p.id %></td>
+            <td><%= p.name %></td>
+            <td><%= p.price %> lei</td>
+            <td>
+              <% if (isAuthenticated) { %>
+                <form action="/adaugare-cos" method="POST" class="inline-form">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                  <input type="hidden" name="id" value="<%= p.id %>" />
+                  <button type="submit">Adaugă în coș</button>
+                </form>
+              <% } else { %>
+                <span class="muted">Autentifică-te pentru coș</span>
+              <% } %>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } %>
+</section>

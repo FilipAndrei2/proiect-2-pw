@@ -1,26 +1,43 @@
 <!DOCTYPE html>
 <html lang="ro">
-<head>
-    <meta charset="UTF-8">
-    <title>Aplicația mea</title>
-</head>
-<body>
-
-    <nav>
-        <a href="/">Home</a>
-        <a href="/login">Login</a>
-    </nav>
-
-    <hr>
-
-    <!-- AICI intră conținutul paginii -->
-    <%- body %>
-
-    <hr>
-
-    <footer>
-        Footer-ul site-ului
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= typeof title !== 'undefined' ? title : 'Magazin auto electric' %></title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="brand">
+        <h1>Magazin auto electric</h1>
+        <p>Accesorii și piese pentru mobilitate electrică</p>
+      </div>
+      <nav class="site-nav">
+        <a href="/">Acasă</a>
+        <a href="/chestionar">Chestionar</a>
+        <a href="/vizualizare-cos">Coș (<%= cartCount %>)</a>
+        <% if (!isAuthenticated) { %>
+          <a href="/autentificare">Autentificare</a>
+        <% } %>
+        <% if (isAuthenticated && currentUser.role === 'ADMIN') { %>
+          <a href="/admin">Admin</a>
+        <% } %>
+      </nav>
+      <% if (isAuthenticated) { %>
+        <div class="auth-bar">
+          Autentificat ca <strong><%= currentUser.username %></strong>
+          <form action="/logout" method="POST" class="inline-form">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+            <button type="submit">Delogare</button>
+          </form>
+        </div>
+      <% } %>
+    </header>
+    <main class="container">
+      <%- body %>
+    </main>
+    <footer class="site-footer">
+      <span>Programare web · Proiect 2</span>
     </footer>
-
-</body>
+  </body>
 </html>

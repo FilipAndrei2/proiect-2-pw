@@ -1,0 +1,27 @@
+<section class="panel">
+  <h2>Chestionar mobilitate electrică</h2>
+  <p>Răspunde la întrebări și verifică-ți cunoștințele despre mașinile electrice.</p>
+</section>
+
+<section class="panel">
+  <form action="/rezultat-chestionar" method="POST" class="quiz-form">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+    <% intrebari.forEach((intrebare, index) => { %>
+      <fieldset class="quiz-item">
+        <legend><%= intrebare.intrebare %></legend>
+        <% intrebare.variante.forEach((varianta, vIndex) => { %>
+          <label class="quiz-option">
+            <input
+              type="radio"
+              name="q<%= index %>"
+              value="<%= vIndex %>"
+              required
+            />
+            <span><%= varianta %></span>
+          </label>
+        <% }); %>
+      </fieldset>
+    <% }); %>
+    <button type="submit">Trimite răspunsurile</button>
+  </form>
+</section>
