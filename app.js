@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const csrf = require('csurf');
 const bcrypt = require('bcrypt');
+const rateLimit = require('express-rate-limit');
 const path = require('path');
 const fs = require('fs/promises');
 const Database = require('better-sqlite3');
@@ -49,6 +50,14 @@ const LOGIN_BASE_COOLDOWN_MS = 15 * 60 * 1000;
 const NOT_FOUND_LIMIT = 10;
 const NOT_FOUND_WINDOW_MS = 60 * 1000;
 const NOT_FOUND_BLOCK_MS = 10 * 60 * 1000;
+
+const loginRateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: 'Prea multe cereri de autentificare. Reincearca mai tarziu.',
+});
 
 function sanitizeUsername(value) {
   if (typeof value !== 'string') {
@@ -306,7 +315,7 @@ app.get('/autentificare', (req, res) => {
   });
 });
 
-app.post('/verificare-autentificare', async (req, res) => {
+app.post('/verificare-autentificare', loginRateLimiter, async (req, res) => {
   const now = Date.now();
   const username = sanitizeUsername(req.body.username);
   const password = typeof req.body.password === 'string' ? req.body.password : '';
@@ -349,7 +358,11 @@ app.post('/verificare-autentificare', async (req, res) => {
     }
 
     clearLoginState(req.ip, username);
-    res.cookie('username', username, { httpOnly: true });
+    res.cookie('username', username, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'lax',
+    });
     res.clearCookie('mesajEroare');
     req.session.user = {
       username: user.username,
